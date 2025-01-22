@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTOCLIMA | Criar Climograma</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<header>
+    <h1>Insira os Dados do Climograma</h1>
+</header>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <div class="escalas">
+            <p><label for="{{ form.escala_precipitacao.id_for_label }}">Escala precipitação (mm):</label>{{ form.escala_precipitacao }}</p>
+            <p><label for="{{ form.escala_temperatura.id_for_label }}">Escala temperatura (°C):</label>{{ form.escala_temperatura }}</p>
+            <p><label for="{{ form.nome_local.id_for_label }}">Nome do local:</label>{{ form.nome_local }}</p>
+            <p><label for="{{ form.nome_user.id_for_label }}">Seu Nome:</label>{{ form.nome_user }}</p>
+            <button type="submit">Gerar Climograma</button>
+        </div>    
+        <hr>
+        <div class="precip">
+            <h3>Precipitação mensal (mm):</h3>
+            <p>Janeiro</p>
+            <p>{{ form.precip_mes_1 }}</p>
+            <p>Fevereiro</p>
+            <p>{{ form.precip_mes_2 }}</p>
+            <p>Março</p>
+            <p>{{ form.precip_mes_3 }}</p>
+            <p>Abril</p>
+            <p>{{ form.precip_mes_4 }}</p>
+            <p>Maio</p>
+            <p>{{ form.precip_mes_5 }}</p>
+            <p>Junho</p>
+            <p>{{ form.precip_mes_6 }}</p>
+            <p>Julho</p>
+            <p>{{ form.precip_mes_7 }}</p>
+            <p>Agosto</p>
+            <p>{{ form.precip_mes_8 }}</p>
+            <p>Setembro</p>
+            <p>{{ form.precip_mes_9 }}</p>
+            <p>Outubro</p>
+            <p>{{ form.precip_mes_10 }}</p>
+            <p>Novembro</p>
+            <p>{{ form.precip_mes_11 }}</p>
+            <p>Dezembro</p>
+            <p>{{ form.precip_mes_12 }}</p>
+        </div>
+        <hr>
+        <div class="temp">
+            <h3>Temperatura mensal (°C):</h3>
+            <p>Janeiro</p>
+            <p>{{ form.temp_mes_1 }}</p>
+            <p>Fevereiro</p>
+            <p>{{ form.temp_mes_2 }}</p>
+            <p>Março</p>
+            <p>{{ form.temp_mes_3 }}</p>
+            <p>Abril</p>
+            <p>{{ form.temp_mes_4 }}</p>
+            <p>Maio</p>
+            <p>{{ form.temp_mes_5 }}</p>
+            <p>Junho</p>
+            <p>{{ form.temp_mes_6 }}</p>
+            <p>Julho</p>
+            <p>{{ form.temp_mes_7 }}</p>
+            <p>Agosto</p>
+            <p>{{ form.temp_mes_8 }}</p>
+            <p>Setembro</p>
+            <p>{{ form.temp_mes_9 }}</p>
+            <p>Outubro</p>
+            <p>{{ form.temp_mes_10 }}</p>
+            <p>Novembro</p>
+            <p>{{ form.temp_mes_11 }}</p>
+            <p>Dezembro</p>
+            <p>{{ form.temp_mes_12 }}</p>
+        </div>    
+
+    </form>
+</body>
+</html>
