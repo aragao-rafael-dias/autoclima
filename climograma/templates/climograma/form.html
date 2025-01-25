@@ -6,76 +6,73 @@
     <title>AUTOCLIMA | Criar Climograma</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script>
+        function carregarTemplate() {
+            var opcaoSelecionada = document.getElementById('id_periodo_escolha').value;
+            var url = `/carregar_template/?periodo=${opcaoSelecionada}`;
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao carregar template');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        console.error('Erro do servidor:', data.error);
+                        alert(data.error);
+                    }  else {
+                        const csrfToken = document.querySelector('[name="csrfmiddlewaretoken"]').value;
+                        document.querySelector('.gen-form').innerHTML = data.html;
+
+                        // Recriar o campo csrf_token dentro da div para enviar junto com o formulário
+                        const csrfInput = document.createElement('input');
+                        csrfInput.type = 'hidden';
+                        csrfInput.name = 'csrfmiddlewaretoken';
+                        csrfInput.value = csrfToken;
+                        document.querySelector('form').appendChild(csrfInput);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar template:', error);
+                });
+        }
+
+        window.onload = function () {
+            var opcoesSelect = document.getElementById('id_periodo_escolha');
+            if (opcoesSelect) {
+                opcoesSelect.addEventListener('change', carregarTemplate);
+                carregarTemplate();  // Inicializa o template na primeira carga
+            }
+        };
+    </script>
 </head>
+
 <header>
     <h1>Insira os Dados do Climograma</h1>
 </header>
+
 <body>
-    <form method="post">
+    <form method="POST">
         {% csrf_token %}
+
+        <div class="select">
+            {{ form.periodo_escolha.label_tag }}
+            {{ form.periodo_escolha }}
+        </div>
+
         <div class="escalas">
             <p><label for="{{ form.escala_precipitacao.id_for_label }}">Escala precipitação (mm):</label>{{ form.escala_precipitacao }}</p>
             <p><label for="{{ form.escala_temperatura.id_for_label }}">Escala temperatura (°C):</label>{{ form.escala_temperatura }}</p>
             <p><label for="{{ form.nome_local.id_for_label }}">Nome do local:</label>{{ form.nome_local }}</p>
             <p><label for="{{ form.nome_user.id_for_label }}">Seu Nome:</label>{{ form.nome_user }}</p>
-            <button type="submit">Gerar Climograma</button>
+            <button type="submit" >Gerar Climograma</button>
         </div>    
+
         <hr>
-        <div class="precip">
-            <h3>Precipitação mensal (mm):</h3>
-            <p>Janeiro</p>
-            <p>{{ form.precip_mes_1 }}</p>
-            <p>Fevereiro</p>
-            <p>{{ form.precip_mes_2 }}</p>
-            <p>Março</p>
-            <p>{{ form.precip_mes_3 }}</p>
-            <p>Abril</p>
-            <p>{{ form.precip_mes_4 }}</p>
-            <p>Maio</p>
-            <p>{{ form.precip_mes_5 }}</p>
-            <p>Junho</p>
-            <p>{{ form.precip_mes_6 }}</p>
-            <p>Julho</p>
-            <p>{{ form.precip_mes_7 }}</p>
-            <p>Agosto</p>
-            <p>{{ form.precip_mes_8 }}</p>
-            <p>Setembro</p>
-            <p>{{ form.precip_mes_9 }}</p>
-            <p>Outubro</p>
-            <p>{{ form.precip_mes_10 }}</p>
-            <p>Novembro</p>
-            <p>{{ form.precip_mes_11 }}</p>
-            <p>Dezembro</p>
-            <p>{{ form.precip_mes_12 }}</p>
-        </div>
-        <hr>
-        <div class="temp">
-            <h3>Temperatura mensal (°C):</h3>
-            <p>Janeiro</p>
-            <p>{{ form.temp_mes_1 }}</p>
-            <p>Fevereiro</p>
-            <p>{{ form.temp_mes_2 }}</p>
-            <p>Março</p>
-            <p>{{ form.temp_mes_3 }}</p>
-            <p>Abril</p>
-            <p>{{ form.temp_mes_4 }}</p>
-            <p>Maio</p>
-            <p>{{ form.temp_mes_5 }}</p>
-            <p>Junho</p>
-            <p>{{ form.temp_mes_6 }}</p>
-            <p>Julho</p>
-            <p>{{ form.temp_mes_7 }}</p>
-            <p>Agosto</p>
-            <p>{{ form.temp_mes_8 }}</p>
-            <p>Setembro</p>
-            <p>{{ form.temp_mes_9 }}</p>
-            <p>Outubro</p>
-            <p>{{ form.temp_mes_10 }}</p>
-            <p>Novembro</p>
-            <p>{{ form.temp_mes_11 }}</p>
-            <p>Dezembro</p>
-            <p>{{ form.temp_mes_12 }}</p>
-        </div>    
+
+        <div class="gen-form"></div>
 
     </form>
 </body>

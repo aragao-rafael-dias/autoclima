@@ -36,11 +36,11 @@ form {
     border-radius: 5px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 15px;
 }
 
-.escalas, .temp, .precip {
+.escalas, .temp-mensal, .precip-mensal {
     width: 100%;
     margin: 15px 0;
     padding: 20px;
@@ -85,7 +85,7 @@ button:hover {
         flex-direction: column;
     }
 
-    .escalas, .temp, .precip {
+    .escalas, .temp-mensal, .precip-mensal {
         width: 100%;
     }
 
